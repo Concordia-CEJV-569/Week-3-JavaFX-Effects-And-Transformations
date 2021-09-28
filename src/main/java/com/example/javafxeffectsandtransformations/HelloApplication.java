@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,12 +28,16 @@ public class HelloApplication extends Application implements EventHandler {
     private BoxBlur boxBlur;
     private double blurVal;
 
+    private Scale scale;
+    private double scaleFactor;
+
     @Override
     public void start(Stage stage) throws IOException {
         stage.setTitle("Life Cycle");
 
         angle = 0.0;
         blurVal = 1.0;
+        scaleFactor = 0.4;
 
         rotateButton = new Button("Rotate");
         blurButton = new Button("Blur");
@@ -40,6 +45,7 @@ public class HelloApplication extends Application implements EventHandler {
 
         rotate = new Rotate();
         boxBlur = new BoxBlur(1.0, 1.0, 1);
+        scale = new Scale(scaleFactor, scaleFactor);
 
         // Register our buttons
         rotateButton.setOnAction(this);
@@ -59,6 +65,7 @@ public class HelloApplication extends Application implements EventHandler {
 
         // Setup transformations
         rotateButton.getTransforms().add(rotate);
+        scaleButton.getTransforms().add(scale);
     }
 
     public static void main(String[] args) {
@@ -87,7 +94,11 @@ public class HelloApplication extends Application implements EventHandler {
             boxBlur.setWidth(blurVal);
             boxBlur.setHeight(blurVal);
         } else if (event.getSource().equals(scaleButton)) {
-            System.out.println("Scale button clicked");
+            scaleFactor += 0.1;
+            if (scaleFactor > 2.0) scaleFactor = 0.4;
+
+            scale.setX(scaleFactor);
+            scale.setY(scaleFactor);
         }
     }
 }
