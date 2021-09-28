@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.Reflection;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
@@ -31,6 +32,7 @@ public class HelloApplication extends Application implements EventHandler {
     private Scale scale;
     private double scaleFactor;
 
+    private Reflection reflection;
     @Override
     public void start(Stage stage) throws IOException {
         stage.setTitle("Life Cycle");
@@ -46,6 +48,7 @@ public class HelloApplication extends Application implements EventHandler {
         rotate = new Rotate();
         boxBlur = new BoxBlur(1.0, 1.0, 1);
         scale = new Scale(scaleFactor, scaleFactor);
+        reflection = new Reflection();
 
         // Register our buttons
         rotateButton.setOnAction(this);
@@ -66,6 +69,12 @@ public class HelloApplication extends Application implements EventHandler {
         // Setup transformations
         rotateButton.getTransforms().add(rotate);
         scaleButton.getTransforms().add(scale);
+
+        reflection.setTopOpacity(0.7);
+        reflection.setBottomOpacity(0.3);
+
+        // Use our label and apply the reflection effect
+        reflectLabel.setEffect(reflection);
     }
 
     public static void main(String[] args) {
